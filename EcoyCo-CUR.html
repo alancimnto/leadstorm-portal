@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-<meta charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cliente Ultra Rentable — Pallets Aglomerados</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Librería para generar el PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
             --navy: #1a1c2c;
@@ -32,67 +34,7 @@
             overflow-x: hidden;
         }
 
-        /* --- NAVEGACIÓN PRINCIPAL --- */
-        .header {
-            background: var(--white);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .top-brand {
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .brand-name {
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--navy);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .brand-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
-
-        .profile-nav {
-            display: flex;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            padding: 0 10px;
-            gap: 5px;
-            background: var(--white);
-        }
-
-        .profile-nav::-webkit-scrollbar { display: none; }
-
-        .ptab {
-            padding: 14px 18px;
-            border: none;
-            background: none;
-            font-family: inherit;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-mid);
-            white-space: nowrap;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: 0.2s;
-        }
-
-        .ptab.active {
-            color: var(--red);
-            border-bottom-color: var(--red);
-        }
-
-        /* --- HERO SECTION --- */
+        /* --- HERO SECTION (AHORA AL PRINCIPIO) --- */
         .hero {
             background: var(--navy);
             color: var(--white);
@@ -158,6 +100,66 @@
             border: 1px solid rgba(255,255,255,0.1);
         }
 
+        /* --- NAVEGACIÓN Y MARCA (DEBAJO DEL HERO) --- */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .top-brand {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand-name {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
+
+        .profile-nav {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 0 10px;
+            gap: 5px;
+            background: var(--white);
+        }
+
+        .profile-nav::-webkit-scrollbar { display: none; }
+
+        .ptab {
+            padding: 14px 18px;
+            border: none;
+            background: none;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-mid);
+            white-space: nowrap;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: 0.2s;
+        }
+
+        .ptab.active {
+            color: var(--red);
+            border-bottom-color: var(--red);
+        }
+
         /* --- SELECTOR DE SECCIONES (MÓVIL) --- */
         .section-nav-mobile {
             padding: 15px 20px;
@@ -205,6 +207,7 @@
             padding: 15px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
+            margin-bottom: 20px;
         }
 
         .stab {
@@ -228,6 +231,26 @@
 
         .stab:hover { background: var(--light); color: var(--navy); }
         .stab.active { background: var(--navy); color: var(--white); }
+
+        /* BOTÓN DINÁMICO SIDEBAR */
+        #dynamic-action-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: var(--navy);
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 13px;
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+        }
+        #dynamic-action-btn:hover {
+            background: var(--red);
+            transform: translateY(-2px);
+        }
 
         .content { flex: 1; width: 100%; min-width: 0; }
 
@@ -271,7 +294,6 @@
 
         .card-content { font-size: 14px; font-weight: 500; color: var(--text); }
 
-        /* Acentos */
         .accent-red { border-left: 4px solid var(--red); }
         .accent-navy { border-left: 4px solid var(--navy); }
         .accent-slate { border-left: 4px solid var(--slate); }
@@ -314,6 +336,42 @@
         .bar-bg { height: 8px; background: var(--light); border-radius: 4px; overflow: hidden; }
         .bar-fill { height: 100%; background: var(--red); border-radius: 4px; transition: width 0.5s; }
 
+        /* BOTÓN PDF */
+        .pdf-action-container {
+            margin-top: 40px;
+            padding: 30px;
+            background: var(--white);
+            border-radius: 20px;
+            border: 2px dashed var(--border);
+            text-align: center;
+        }
+
+        .btn-pdf {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: var(--red);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(239, 35, 60, 0.3);
+        }
+
+        .btn-pdf:hover {
+            background: var(--crimson);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(239, 35, 60, 0.4);
+        }
+
+        /* ESTILOS PARA EL CONTENIDO DEL PDF (OCULTO EN WEB) */
+        #pdf-template { display: none; }
+
         @media (min-width: 900px) {
             .hero { padding: 60px 40px; }
             .hero-title { font-size: 40px; }
@@ -325,16 +383,10 @@
             .profile-nav { padding: 0 40px; }
         }
     </style>
+</head>
+<body>
 
-
-
-    <header class="header">
-        <div class="top-brand">
-            <div class="brand-name"><div class="brand-dot"></div>CLIENTE ULTRA RENTABLE</div>
-        </div>
-        <nav class="profile-nav" id="profile-tabs"></nav>
-    </header>
-
+    <!-- 1. HERO AL PRINCIPIO -->
     <section class="hero">
         <span class="hero-tag">Análisis Estratégico de Mercado</span>
         <h1 class="hero-title">Domina a tu cliente ideal<br><span>mejor que él mismo.</span></h1>
@@ -347,6 +399,14 @@
             <p>Este reporte es una radiografía de las personas que toman decisiones de compra. Úsalo como brújula en prospección, propuesta y cierre.</p>
         </div>
     </section>
+
+    <!-- 2. TOP-BRAND Y 3. PROFILE NAV -->
+    <header class="header">
+        <div class="top-brand">
+            <div class="brand-name"><div class="brand-dot"></div>CLIENTE ULTRA RENTABLE</div>
+        </div>
+        <nav class="profile-nav" id="profile-tabs"></nav>
+    </header>
 
     <div class="section-nav-mobile">
         <select id="mobile-section-select" onchange="switchTab(this.value)">
@@ -365,18 +425,53 @@
     <div class="wrapper">
         <aside class="sidebar">
             <div class="sidebar-nav" id="sidebar-nav"></div>
+            <!-- Contenedor botón dinámico -->
+            <div id="dynamic-btn-container"></div>
         </aside>
-        <main class="content" id="main-content"></main>
+        <main class="content">
+            <div id="main-content"></div>
+            <!-- Contenedor botón PDF -->
+            <div class="pdf-action-container">
+                <button class="btn-pdf" onclick="generatePDF()">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 16l-5-5h10l-5 5zm0-12c-4.41 0-8 3.59-8 8s3.59 8 8 8 8-3.59 8-8-3.59-8-8-8zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/></svg>
+                    Descargar mi cliente en PDF
+                </button>
+            </div>
+        </main>
     </div>
 
+    <!-- Template invisible para el PDF -->
+    <div id="pdf-template"></div>
+
 <script>
+/** * ============================================================
+ * CONFIGURACIÓN DE LISTAS DE CLIENTES FRÍOS
+ * ============================================================
+ * Rellena las comillas con el link correspondiente. 
+ * Si dejas las comillas vacías "", el botón no aparecerá en ese perfil.
+ */
+
+// - Lista clientes frios CUR 1: (Exportadora de Frutas)
+const LINK_CLIENTES_FRIO_1 = "https://docs.google.com/spreadsheets/d/tu-link-1";
+
+// - Lista clientes frios CUR 2: (Empresa con Certificación ESG)
+const LINK_CLIENTES_FRIO_2 = "https://docs.google.com/spreadsheets/d/tu-link-2";
+
+// - Lista clientes frios CUR 3: (Laboratorio Farmacéutico)
+const LINK_CLIENTES_FRIO_3 = ""; 
+
+/** * ============================================================
+ * LÓGICA DEL SISTEMA (NO MODIFICAR SI NO ES NECESARIO)
+ * ============================================================
+ */
+
 const SECTION_META = {
-    'persona':   { icon: '◈', tag:'Perfil del Cliente', title:'Quién es tu <em>cliente</em>', desc:'Este es el mapa de la persona real que toma la decisión de compra. No el nombre de la empresa — la persona. Su cargo, su contexto, la presión que siente, cómo piensa y la frase que mejor lo define.' },
+    'persona':   { icon: '◈', tag:'Perfil del Cliente', title:'Quién es tu <em>cliente</em>', desc:'Este es el mapa de la persona real que toma la decisión de compra. No el nombre de la empresa — la persona.' },
     'dolores-e': { icon: '◉', tag:'Sección 1', title:'Dolores Explícitos', desc:'Son los problemas que este cliente menciona en una primera reunión abiertamente.' },
     'dolores-o': { icon: '◉', tag:'Sección 2', title:'Dolores Ocultos', desc:'Estos dolores realmente mueven la decisión — pero el cliente jamás los admite formalmente.' },
     'miedos':    { icon: '◈', tag:'Sección 3', title:'Miedos', desc:'Los miedos son la razón más común por la que una decisión de compra se congela.' },
     'deseos-e':  { icon: '◉', tag:'Sección 4', title:'Deseos Explícitos', desc:'Son los resultados que este cliente dice en voz alta que quiere lograr.' },
-    'deseos-s':  { icon: '◉', tag:'Sección 5', title:'Deseos Secretos', desc:'Debajo de cada objetivo profesional hay una motivación más profunda: reconocimiento, poder, legado.' },
+    'deseos-s':  { icon: '◉', tag:'Sección 5', title:'Deseos Secretos', desc:'Motivaciones personales: reconocimiento, poder, legado.' },
     'objeciones':{ icon: '◈', tag:'Sección 6', title:'60 Objeciones', desc:'Divididas en Internas (cabeza), Externas (entorno) y del Vehículo (producto).' },
     'preguntas': { icon: '◉', tag:'Sección 7', title:'Preguntas Profundas', desc:'Cómo piensa tu cliente por dentro — respondidas en primera persona.' },
     'promesas':  { icon: '◈', tag:'Sección 8', title:'Promesas', desc:'Las transformaciones que el cliente va a vivir. Úsalas en propuestas y anuncios.' }
@@ -391,9 +486,10 @@ const DATA = { profiles: [
     contexto:"Vive corriendo contra el reloj. En temporada, un problema de logística puede costar cientos de miles de dólares en fruta rechazada. El pallet no es su prioridad hasta que falla.",
     frase:'"Si el pallet me genera un rechazo en frontera, me costó 10 veces lo que ahorré comprando barato."',
     scores:{dolor:9,poder:9,target:10,crecimiento:9,encanta:10,transforma:10,total:57},
+    linkFrio: LINK_CLIENTES_FRIO_1,
     doloresE:["Los pallets convencionales generan rechazos en aduana de EE.UU. o Japón por problemas fitosanitarios y se pierde el embarque completo.","Al apilar pallets vacíos en temporada baja se ocupa el 80% del almacén, sin espacio para operación normal.","Nunca hay certeza de cuántos pallets hay en existencia, siempre hay faltantes al momento de embarcar.","El flete se va en aire — los contenedores viajan con espacio desperdiciado por el volumen de los pallets mismos.","Los pallets de madera con clavo dañan la fruta cuando hay astillas sueltas o clavos salidos, generando merma directa.","Los compradores en destino están empezando a exigir documentación del pallet — antes no pedían nada.","En temporada alta no se encuentran pallets disponibles, los proveedores se quedan sin stock justo cuando más se necesita.","Hay pallets que se rompen en tránsito y la fruta llega mal acomodada, el cliente en destino descuenta o devuelve.","Cada vez que se cambia proveedor hay variación en medidas y no encajan bien con las líneas de empaque.","El manejo de pallets en almacén genera accidentes — clavos expuestos, astillas, pallets mal apilados que se caen.","Se paga almacenaje en frío y los pallets vacíos están ocupando espacio refrigerado que cuesta por metro cúico.","Los competidores ya ofrecen trazabilidad del empaque completo y aún no hay ni el pallet documentado.","El proveedor vende pallet 'nuevo' pero llegan usados o en mal estado y reclamar es un problema.","Los certificados fitosanitarios del pallet se piden en cada embarque y conseguirlos con el proveedor actual es lento.","En inspecciones de SENASICA o USDA se han detenido embarques por el pallet, no por la fruta.","El peso del pallet de madera resta kilos de fruta por contenedor — se paga flete de madera, no de producto.","Cuando hay humedad en tránsito, los pallets de madera se hinchan y la tarima completa se desestabiliza.","Hay que comprar pallets con 3 semanas de anticipación porque el proveedor no tiene capacidad de respuesta inmediata.","El área de compras pelea constantemente con logística por el presupuesto de pallets — nadie quiere cargar ese costo.","Se han rechazado pedidos urgentes de clientes nuevos porque no había pallets disponibles a tiempo."],
     doloresO:["Saben que el proveedor los tiene 'de rehenes' en temporada alta y aceptan condiciones que en otro momento no aceptarían.","Han firmado contratos con clientes internacionales prometiendo estándares de empaque que en realidad no pueden garantizar hoy.","La merma por pallet deficiente es más alta de lo que reportan a dirección porque nadie quiere esa conversación.","El comprador de pallets decide por precio porque así le miden su desempeño, aunque sabe que cuesta más en el total.","Tienen miedo de perder la certificación GlobalG.A.P. o USDA Organic por una no conformidad relacionada con el empaque.","Cuando hay un rechazo en aduana, internamente nunca queda claro quién tuvo la culpa — el pallet siempre es sospechoso.","Han cambiado de proveedor de pallet 3 o 4 veces en los últimos años y saben que el problema es estructural.","El gerente de logística sabe que debería estandarizar el pallet pero no tiene el argumento financiero para convencer a dirección.","Tienen vergüenza de mostrar sus instalaciones de almacenaje de pallets vacíos a clientes o auditores — es un desorden.","Saben que sus competidores más grandes ya resolvieron este problema pero no quieren admitir que van atrás.","El área de calidad y el área de logística tienen conflictos crónicos por rechazos relacionados con empaque — nadie cede.","Asumen que cambiar de proveedor de pallet es demasiado complicado para el resultado que daría, así que no lo priorizan.","Tienen un número real de pérdidas por pallet en su cabeza pero nunca lo han puesto por escrito porque sería incómodo.","El director general no entiende por qué el pallet es un problema — para él es 'solo una caja de madera'.","Han considerado fabricar sus propios pallets internamente para no depender de nadie, pero saben que no es su negocio.","La presión de los compradores japoneses o estadounidenses sobre estándares fitosanitarios los angustia más de lo que muestran.","Su precio de exportación podría mejorar si optimizaran el espacio en contenedor pero nunca han calculado cuánto.","El área de compras tiene una relación personal con el proveedor actual y eso dificulta cambiar aunque sea lo correcto.","Han tenido un incidente grave con pallets que nunca se documentó oficialmente.","En temporada baja sienten que todo está bajo control pero saben que en cuanto llegue la temporada, el caos regresa."],
-    miedos:["Que un rechazo en aduana por el pallet arruine la relación con un comprador que tomó años construir.","Que una auditoría de USDA, FDA o GlobalG.A.P. suspenda su certificación por no conformidades en el empaque.","Que un competidor de la misma región resuelva el problema del pallet antes y obtenga ventaja en precio de flete.","Que la fruta llegue dañada por un pallet que se rompió en tránsito y el cliente los culpe a ellos.","Que el proveedor actual suba precios drásticamente en temporada alta y no haya alternativa.","Que en una inspección encuentren contaminantes biológicos en el pallet y se detenga toda la operación.","Que los trabajadores sufran un accidente grave por un pallet en mal estado y haya responsabilidad legal.","Que el comprador en Japón exija un cambio de pallet certificado con menos de 30 días de anticipación.","Que el costo de almacenaje de pallets vacíos los haga no competitivos frente a exportadoras más eficientes.","Que la nueva generación de la familia compradora exija estándares de sustentabilidad que el pallet actual no cumple.","Que un error en documentación fitosanitaria cause retrasos que se traduzcan en pérdida total de la carga perecedera.","Que un accidente logístico por pallet deficiente llegue a un medio y dañe la imagen de la empresa.","Que no puedan escalar volumen de exportación porque el proveedor de pallets no tiene capacidad de crecer con ellos.","Que el equipo de calidad les presente un reporte de pérdidas acumuladas por pallet que el director vea por primera vez.","Que una empresa más pequeña los gane en precio de flete por usar pallets anidables mientras ellos siguen con los convencionales.","Que pierdan un cliente ancla por una falla de empaque repetida que debieron haber resuelto antes.","Que el IMSS o STPS los sancione por un accidente laboral relacionado con el manejo de pallets deficientes.","Que sus compradores en EE.UU. empiecen a exigir trazabilidad del pallet y no tengan cómo responder.","Que el tipo de cambio suba y el único lugar donde puedan recortar sea el empaque, lo que empeora todo.","Que el director general decida comprar pallets más baratos aún, sin entender el costo real del problema."],
+    miedos:["Que un rechazo en aduana por el pallet arruine la relación con un comprador que tomó años construir.","Que una auditoría de USDA, FDA o GlobalG.A.P. suspenda su certificación por no conformidades en el empaque.","Que un competidor de la misma región resuelva el problema del pallet antes y obtenga ventaja en precio de flete.","Que la fruta llegue dañada por un pallet que se rompió en tránsito y el cliente los culpe a ellos.","Que el proveedor actual suba precios drásticamente en temporada alta y no haya alternativa.","Que en una inspección encuentren contaminantes biológicos en el pallet y se detenga toda la operación.","Que los trabajadores sufran un accidente grave por un pallet en mal estado y haya responsabilidad legal.","Que el comprador en Japón exija un cambio de pallet certificado con menos de 30 días de anticipación.","Que el costo de almacenaje de pallets vacíos los haga no competitivos frente a exportadoras más eficientes.","Que la nueva generación de la familia compradora exija estándares de sustentabilidad que el pallet actual no cumple.","Que un error en documentación fitosanitaria cause retrasos que se traduzcan en pérdida total de la carga perecedera.","Que un accidente logístico por pallet deficiente llegue a un medio y dañe la imagen de la empresa.","Que no puedan escalar volumen de exportación porque el proveedor de pallets no tiene capacidad de crecer con ellos.","Que el equipo de calidad les presente un reporte de pérdidas acumuladas por pallet que el director vea por primera vez.","Que una empresa más pequeña los gane en precio de flete por usar pallets anidables mientras ellos siguen con los convencionales.","Que pierdan un cliente ancla por una falla de empaque repetida que debieron haber resuelto antes.","Que el IMSS o STPS los sancione por un accidente laboral relacionado con el manejo de pallets deficientes.","Que sus compradores en EE.UU. empiecen a exigir trazabilidad del pallet y no tengan cómo responder.","Que el tipo de cambio suga y el único lugar donde puedan recortar sea el empaque, lo que empeora todo.","Que el director general decida comprar pallets más baratos aún, sin entender el costo real del problema."],
     deseosE:["Cruzar la frontera sin que el pallet sea jamás el motivo de una detención o rechazo.","Tener un proveedor que entregue a tiempo siempre, incluso en temporada alta, sin excusas.","Reducir el espacio que ocupan los pallets vacíos en almacén para aprovechar ese espacio en operación.","Meter más kilos de producto por contenedor para bajar el costo de flete por kilo exportado.","Tener toda la documentación del pallet lista y en regla antes de que se la pidan, no después.","Eliminar la merma de fruta causada por pallets defectuosos o con clavos y astillas.","Estandarizar el pallet en toda la operación para que cualquier trabajador lo use sin capacitación especial.","Impresionar a sus compradores internacionales con un proceso de empaque limpio, moderno y documentado.","Tener un argumento de sustentabilidad real que puedan poner en su presentación de empresa a compradores exigentes.","Dejar de pelear entre compras y logística por el presupuesto y la responsabilidad del pallet.","Escalar el volumen de exportación sin que la logística de pallets sea el cuello de botella.","Que el área de calidad deje de reportar incidencias relacionadas con el pallet en auditorías internas.","Tener un proveedor que entienda el ritmo de la temporada agrícola y se anticipe, no que reaccione.","Reducir el tiempo de armado de tarimas en línea de empaque para que el proceso sea más rápido.","Que el director general vea el pallet como una inversión que protege el margen, no como un costo a recortar.","Certificarse en nuevos mercados como UE, Corea o Australia sin que el pallet sea un obstáculo regulatorio.","Tener fotos y videos del proceso de empaque que puedan mandar a compradores como prueba de estándares.","Reducir los accidentes laborales en almacén relacionados con el manejo de pallets.","Que el almacén de pallets vacíos se vea ordenado y profesional cuando lleguen clientes o auditores.","Encontrar un proveedor con quien construir una relación de largo plazo, no estar cambiando cada temporada."],
     deseosS:["Que el pallet sea tan bueno que los compradores japoneses lo mencionen espontáneamente como diferenciador.","Ganar el contrato con la cadena de supermercados que exige estándares que sus competidores no cumplen.","Que el director general los felicite por haber reducido costos de flete a través de una decisión de empaque inteligente.","Ser los primeros en su zona en usar pallets certificados y poder presumirlo en ferias y reuniones gremiales.","Que el área de operaciones sea reconocida internamente por haber resuelto un problema que llevaba años pendiente.","Poder subir precios de venta a compradores argumentando estándares superiores de empaque y trazabilidad.","Que una revista del sector o una asociación de exportadores los mencione como caso de éxito en logística.","Tener un proceso de empaque tan limpio y documentado que al mostrarlo en video genere admiración, no vergüenza.","Que el cambio de pallet los ayude a justificar ante el banco o inversionista una expansión de capacidad.","Que sus competidores más grandes se enteren del cambio y empiecen a hacer preguntas.","Dejar de sentirse en desventaja frente a exportadoras más grandes — sentir que en logística van a la par.","Que el equipo en campo hable bien del pallet: que sea fácil de usar, que no lastime las manos, que no se rompa.","Que el proveedor de pallets los trate como cliente prioritario, no como uno más de la lista.","Tener la tranquilidad de que si llega una auditoría sorpresa mañana, el pallet no va a ser el problema.","Que los hijos o la siguiente generación encuentren una operación más profesional y ordenada.","Poder decirle a un cliente nuevo: 'nuestro pallet cumple con X, Y, Z normas' sin tener que consultar primero.","Que el cambio de pallet sea la primera mejora visible de una transformación operativa más grande que quieren hacer.","Que un solo cambio de proveedor resuelva simultáneamente 3 o 4 problemas que han arrastrado años.","Sentir que están construyendo una empresa exportadora de clase mundial, no solo sobreviviendo la temporada.","Que el día que vendan o valúen la empresa, la operación logística sea uno de sus activos, no un pasivo."],
     objeciones:{
@@ -418,6 +514,7 @@ const DATA = { profiles: [
     contexto:"Está bajo presión real de demostrar avances en huella de carbono, uso de materiales renovables y trazabilidad de su cadena de suministro. Busca proveedores que den argumentos medibles, no solo intenciones.",
     frase:'"Necesito que mi proveedor de pallets me dé un número que pueda poner en mi reporte de sustentabilidad — no un folleto verde."',
     scores:{dolor:8,poder:10,target:9,crecimiento:8,encanta:9,transforma:9,total:53},
+    linkFrio: LINK_CLIENTES_FRIO_2,
     doloresE:["El reporte ESG anual exige demostrar reducción de huella de carbono en packaging y embalaje — y hoy no hay datos del pallet.","Los fondos de inversión o el consejo exigen avances medibles en sustentabilidad cada trimestre y el área de compras no tiene argumentos concretos.","Los clientes corporativos internacionales exigen que toda la cadena de suministro cumpla con criterios ESG — incluyendo el embalaje.","Hoy compran pallets de madera convencional sin conocer su procedencia ni si implica deforestación — un riesgo reputacional real.","No tienen documentación del pallet que respalde el reporte de sustentabilidad — todo es estimación o suposición.","El área de compras optimiza por precio y el área de sustentabilidad optimiza por impacto — el conflicto es permanente.","Han sido auditados por clientes o certificadoras que cuestionaron los materiales de embalaje y no tuvieron respuesta sólida.","Competidores de su sector ya publican huellas de carbono de su packaging — ellos van atrás y sus clientes lo notan.","El proveedor actual de pallets no puede darles ningún dato de emisiones, procedencia de madera o proceso de fabricación.","Los compradores de Europa o Norteamérica están empezando a pedir declaraciones ambientales del embalaje.","Tienen un compromiso público de reducción de residuos sólidos pero el pallet convencional no aplica para ese reporte.","La certificación ISO 14001 que buscan obtener implica demostrar control sobre los insumos de packaging — el pallet es un pendiente.","El equipo de comunicación no puede usar el pallet como argumento de sustentabilidad porque no hay datos que lo respalden.","Han rechazado proveedores que se llaman 'sustentables' porque no tienen certificación real ni datos verificables.","El proceso de compra de pallets es totalmente opaco — no saben si el proveedor tiene buenas prácticas o no.","Están buscando insumos que les ayuden a cumplir con el Acuerdo de Carbono de la UE antes de que sea obligatorio.","El área de RSE quiere hacer una campaña sobre embalaje responsable pero no tiene un caso real concreto.","Los bancos están empezando a ofrecer créditos verdes condicionados a métricas ambientales — y el pallet podría ser una de ellas.","Sus consumidores finales son cada vez más sensibles a los empaques — y el pallet como parte visible del sistema importa.","Están construyendo un reporte GRI o TCFD y el capítulo de cadena de suministro tiene un hueco donde debería estar el pallet."],
     doloresO:["Saben que gran parte de su reporte ESG es narrativa con datos débiles — y les preocupa que una auditoría profunda lo exponga.","El director de sustentabilidad siente presión de demostrar resultados reales, no solo intenciones, y está corriendo contra el tiempo.","Internamente saben que compras elige proveedores por precio y el discurso ESG es para afuera — esa contradicción los incomoda.","Han firmado compromisos públicos de cero deforestación o neutralidad de carbono que hoy no pueden demostrar en su embalaje.","Tienen miedo de que un periodista o activista exponga la contradicción entre su discurso verde y sus prácticas de compra.","El área de compras cree que sustentabilidad es 'cosa de relaciones públicas' — y esa fricción bloquea decisiones.","Saben que el costo de no cumplir ESG es mayor que el de cumplir — pero no lo han cuantificado formalmente.","Han tenido reuniones con fondos de inversión donde les preguntaron por su cadena de suministro sin tener respuestas sólidas.","El reporte de sustentabilidad lo escribe comunicación con datos que operaciones no reconoce como suyos.","Temen perder la certificación o membresía en algún organismo ESG si no demuestran avances concretos este año.","El equipo directivo apoya ESG en discurso pero cuando hay que elegir entre precio y sustentabilidad, gana el precio.","Han contratado consultoras de sustentabilidad que dan recomendaciones genéricas sin aterrizar en cambios operativos reales.","Saben que sus competidores que sí tienen datos de embalaje sustentable están ganando contratos que ellos están perdiendo.","El área legal les ha advertido sobre regulaciones europeas de packaging que se vienen y no han tomado acción concreta.","Sienten que la sustentabilidad en su empresa es un proyecto de comunicación, no una transformación real.","Han prometido a sus clientes más importantes avances en Scope 3 pero no tienen cómo medirlos hoy.","Internamente hay cinismo sobre el tema ESG — algunos directivos lo ven como moda — y eso hace difícil implementar cambios reales.","El área de finanzas no ve el retorno claro de invertir en insumos sustentables y bloquea las propuestas antes de que lleguen al consejo.","Han perdido licitaciones con clientes corporativos grandes por no cumplir con criterios de cadena de suministro responsable.","Saben que el cambio tiene que venir de un proveedor que les dé datos, no de ellos teniendo que pedírselos — y eso no lo han encontrado."],
     miedos:["Que una auditoría de su reporte ESG exponga que los datos de embalaje son estimaciones sin respaldo real.","Que pierdan acceso a capital verde o créditos sostenibles por no poder demostrar avances en cadena de suministro.","Que un cliente corporativo clave los descalifique de una licitación por no cumplir con criterios de embalaje responsable.","Que una ONG o medio de comunicación los señale como empresa que hace 'greenwashing' con su packaging.","Que regulaciones de packaging de la Unión Europea los impacten antes de que estén preparados para cumplir.","Que sus competidores que sí tienen datos de huella de carbono los superen en criterios de selección de clientes.","Que el consejo de administración o los accionistas cuestionen públicamente el avance real en metas ESG.","Que el talento joven que quieren atraer rechace trabajar en una empresa sin credenciales ambientales reales.","Que la certificación más importante no se renueve por fallas en la cadena de suministro.","Que un fondo de inversión socialmente responsable decida salir de su empresa por falta de avance en ESG.","Que el reporte de sustentabilidad sea cuestionado por accionistas minoritarios en la asamblea anual.","Que el área de compras tome una decisión de precio sobre pallets que contradiga un compromiso ESG firmado.","Que la regulación de carbono fronterizo de la UE los haga no competitivos antes de que se adapten.","Que sus empleados pierdan orgullo de trabajar ahí cuando descubran que los compromisos verdes son solo comunicación.","Que un estudio de ciclo de vida encargado por un cliente encuentre que su embalaje tiene huella más alta de lo declarado.","Que el proveedor de pallets actual sea expuesto por tala ilegal y ellos queden vinculados.","Que la presión regulatoria llegue antes de que tengan proveedores alternativos identificados.","Que perder una licitación importante por criterios ESG sea el evento que sensibilice al consejo — cuando ya sea tarde.","Que el mercado de bonos de carbono les exija datos que no tienen manera de generar con sus proveedores actuales.","Que la brecha entre lo que comunican y lo que hacen se vuelva insostenible públicamente antes de que la cierren."],
@@ -438,13 +535,14 @@ const DATA = { profiles: [
     promesas:["El primer pallet de tu cadena de suministro con datos verificables de huella de carbono — no estimaciones, números reales para tu reporte.","Cumple hoy el requisito de embalaje que tus clientes europeos te van a exigir mañana — sin carreras de último minuto.","Convierte tu reporte ESG de narrativa con datos débiles a argumento sólido con cifras auditables en cadena de suministro.","Un proveedor que habla el idioma de sustentabilidad real — ficha técnica, LCA y declaración ambiental de producto incluidos.","Cierra la brecha entre lo que dices en tu reporte y lo que realmente haces — el pallet es la prueba concreta que te faltaba.","El argumento que convence al CFO y al director de sustentabilidad al mismo tiempo: ahorro en flete más reducción de Scope 3.","Pasas cualquier auditoría ESG sin preparación especial — la documentación del pallet está lista antes de que la pidan.","Reduce tu Scope 3 con un cambio operativo que no requiere reinventar tu negocio — el pallet ya lo estás comprando.","El proveedor que te ayuda a calcular el impacto, no solo a comprarte el producto — análisis de reducción de emisiones incluido.","Sube tu calificación en índices ESG con evidencia de acción real en cadena de suministro, no solo en operaciones propias.","Una historia de sustentabilidad que el equipo de comunicación puede contar con datos reales — no greenwashing.","Que compras y sustentabilidad dejen de pelear: un pallet que satisface el costo-beneficio y los criterios ambientales.","Anticípate a la regulación europea de packaging antes de que sea una crisis — y llega a ese mercado con ventaja.","Del primer pedido al reporte auditado: te acompañamos con la documentación técnica, ambiental y de proceso.","El proveedor que tiene su propia política ambiental — no le pides que practique lo que predica, ya lo está haciendo.","Que el consejo vea en el pallet el primer avance concreto en Scope 3 — y quiera más de lo mismo.","Accede a créditos verdes con la evidencia de que tu cadena de suministro tiene proveedores verificados.","El material de empaque que reduce residuos sólidos con número real — reportable, medible y comunicable.","Gana la licitación que perdiste por criterios de cadena de suministro — con el pallet como argumento diferenciador.","No un proveedor de pallets con folleto verde: un aliado que te ayuda a construir la cadena de suministro de la que estás genuinamente orgulloso."]
   },
   {
-    name:"Laboratorio Farmacéutico Exportador", emoji:"🧴",
+    name:"Laboratorio Farmacéutico", emoji:"🧴",
     cargo:"Gerente de Logística / Director de Cadena de Suministro / Jefe de Calidad en Exportación",
     empresa:"Laboratorio farmacéutico, cosmético o de dispositivos médicos. Ventas $20M–$200M USD. Exporta a EE.UU., Canadá, Europa o Latinoamérica bajo regulaciones FDA, COFEPRIS, EMA o ANVISA.",
     decision:"Decisión compartida entre logística, calidad y compras. El área de calidad tiene poder de veto — si el pallet no pasa su filtro regulatorio, no entra.",
     contexto:"Trabaja bajo presión regulatoria constante. Cualquier no conformidad en el embalaje puede detener una exportación o comprometer una certificación de planta. El pallet no es 'madera' para ellos — es parte del sistema de empaque regulado.",
     frase:'"El pallet no es un commodity para nosotros — es parte de nuestro sistema de empaque y tiene que pasar por calidad antes de que entre a la planta."',
     scores:{dolor:9,poder:10,target:8,crecimiento:6,encanta:8,transforma:9,total:50},
+    linkFrio: LINK_CLIENTES_FRIO_3,
     doloresE:["El pallet convencional de madera y clavo representa un riesgo de contaminación cruzada que los productos farmacéuticos no toleran.","Las inspecciones de FDA o EMA han hecho observaciones sobre el embalaje secundario, incluyendo las tarimas usadas en exportación.","El área de calidad rechaza pallets que llegan con evidencia de humedad, hongos o plagas — y eso paraliza la operación.","No tienen un proveedor que les entregue documentación técnica lista para incluir en el dossier de exportación.","El proceso de validación de nuevos proveedores de embalaje es largo y costoso — y no quieren hacerlo para después encontrar que el proveedor no cumple.","Han tenido pallets que llegan con olor a humedad o a tratamiento químico que contamina el ambiente de almacén de producto terminado.","Los clavos y astillas representan un riesgo de contaminación física del producto si se rompe una tarima en planta.","Sus clientes exigen que el pallet cumpla con estándares ISPM-15 y quieren el certificado antes de cada embarque.","La cadena de frío se ve comprometida cuando el pallet absorbe humedad y se deforma.","No pueden usar pallets con historial desconocido — y los proveedores actuales no garantizan la procedencia.","El almacenamiento de pallets vacíos cerca de la planta genera observaciones en auditorías de BPM.","El espacio de almacenamiento en planta es crítico — los pallets convencionales ocupan espacio que se necesita para operación.","En temporada de exportaciones altas no hay suficientes pallets certificados disponibles en el mercado.","El área de compras quiere el pallet más barato y el área de calidad quiere el más documentado — el conflicto genera retrasos.","Cuando hay una auditoría sorpresa, la documentación del pallet es uno de los puntos más débiles del expediente.","Los pallets que llegan con variaciones de medida generan problemas en el acomodo e inestabilidad en tránsito.","Han perdido tiempo en retrabajos porque el pallet no era compatible con el sistema de sujeción.","Los pallets de madera convencional con clavo no pueden entrar a ciertas zonas de planta por riesgo de contaminación.","No tienen visibilidad del historial del pallet: dónde estuvo, qué transportó, si fue tratado — inaceptable en farmacéutico.","Un solo pallet contaminado que llegue a una zona limpia puede generar una no conformidad que detenga la producción completa."],
     doloresO:["Saben que el pallet es el eslabón más débil de su sistema de empaque regulado — y no lo han resuelto porque nadie quiere abrir esa conversación.","El área de calidad ha hecho la vista gorda con el pallet porque saben que no hay alternativas fáciles — y eso los incomoda.","Han tenido no conformidades relacionadas con el embalaje que internamente se atribuyeron al pallet pero quedaron en 'causa indeterminada'.","Saben que en una inspección de FDA con nivel de detalle alto, el pallet sería un hallazgo — y esperan que no suceda.","El gerente de logística siente que carga solo con el problema del pallet porque calidad lo señala y compras no quiere pagar más.","Han comprado pallets 'certificados' que en la práctica no tenían la documentación completa — y aceptaron con tal de no parar.","Internamente saben que su planta no está 100% en cumplimiento respecto al control del embalaje externo.","Tienen miedo de que una empresa auditora contratada por un cliente encuentre el problema del pallet antes que ellos lo resuelvan.","El director de calidad ha estado postergando exigir un pallet totalmente documentado porque sabe que generará conflicto con compras.","Han normalizado el riesgo del pallet convencional porque 'nunca ha pasado nada' — pero saben que la probabilidad no es cero.","El área de asuntos regulatorios sabe que el pallet debería estar más documentado en el dossier pero deja ese capítulo vago.","Han calculado internamente el costo de una no conformidad por pallet pero nunca lo han puesto en un documento formal.","Algunos trabajadores de planta ya no quieren manejar pallets convencionales por el riesgo físico — pero nadie escaló la queja.","El proveedor actual los tiene en dependencia que les molesta pero no saben cómo salir sin generar caos operativo.","Han considerado fabricar sus propios pallets y descartaron la idea — pero el problema sigue sin resolverse.","Saben que sus competidores farmacéuticos más avanzados ya tienen un protocolo de calidad para el pallet — ellos no.","El tema del pallet en las auditorías internas siempre genera incomodidad — se menciona, se nota, y no hay respuesta satisfactoria.","Han prometido a auditores externos que van a 'revisar y mejorar' el control del embalaje externo — y llevan dos años sin hacerlo.","El gerente de logística y el director de calidad tienen versiones distintas de 'cuánto problema real es el pallet'.","Saben que si resolvieran el pallet de una vez, se quitarían un peso que llevan cargando silenciosamente hace años."],
     miedos:["Que una inspección de FDA, EMA o COFEPRIS identifique al pallet como fuente de contaminación y emita una observación que detenga la exportación.","Que un lote de producto rechazado en destino tenga como causa raíz una contaminación vinculada al pallet.","Que una auditoría de un cliente internacional encuentre no conformidades en el control del embalaje externo.","Que el área de calidad tenga que rechazar un lote completo de producto terminado por un pallet contaminado.","Que la certificación de planta ISO 9001, ISO 13485 o GMP no se renueve por observaciones de embalaje.","Que un accidente laboral por un clavo o astilla de pallet genere responsabilidad legal y sanciones.","Que la autoridad sanitaria encuentre que el pallet no está especificado en el sistema de calidad y emita una no conformidad crítica.","Que el producto llegue al destino con evidencia de contaminación física y el cliente regrese el lote completo.","Que el distribuidor en EE.UU. o Europa decida no renovar el contrato por fallas repetidas en el embalaje externo.","Que una no conformidad por pallet los obligue a hacer un retiro de producto del mercado.","Que el ISPM-15 sea auditado con más rigor por el país destino y no tengan los certificados en regla.","Que un empleado de calidad haga una denuncia ante la autoridad sobre el estado del control de embalaje en la planta.","Que la presión de compras por precio lleve a comprar un pallet más barato que no pasa el filtro de calidad.","Que la no conformidad por pallet sea el detonante de una inspección más amplia que exponga otras áreas.","Que un cliente corporativo grande haga una auditoría de segunda parte y el pallet sea el hallazgo principal.","Que el personal de planta empiece a rechazar trabajar con ciertos pallets y eso genere un problema laboral.","Que la cadena de frío de un producto de alto valor se interrumpa por la deformación de un pallet húmedo — con pérdida total del lote.","Que la competencia que ya resolvió el pallet les gane clientes en mercados donde el control de empaque es requisito.","Que la aseguradora rechace una reclamación por daño en tránsito argumentando que el embalaje externo no era adecuado.","Que el CEO se entere del problema del pallet por un incidente externo — no por una propuesta interna de mejora."],
@@ -469,9 +567,17 @@ const DATA = { profiles: [
 let currentProfile = 0;
 let currentTab = 'persona';
 
+function init() {
+    renderProfileTabs();
+    renderSidebarNav();
+    updateDynamicButton();
+    renderContent();
+}
+
 function switchProfile(idx) {
     currentProfile = idx;
     renderProfileTabs();
+    updateDynamicButton();
     renderContent();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -499,6 +605,22 @@ function renderSidebarNav() {
             <span>${SECTION_META[key].icon}</span> ${key === 'objeciones' ? '60 Objeciones' : SECTION_META[key].title.replace('<em>','').replace('</em>','')}
         </button>
     `).join('');
+}
+
+// Lógica del botón dinámico de prospectos
+function updateDynamicButton() {
+    const p = DATA.profiles[currentProfile];
+    const container = document.getElementById('dynamic-btn-container');
+    
+    if (p.linkFrio && p.linkFrio.trim() !== "") {
+        container.innerHTML = `
+            <a href="${p.linkFrio}" target="_blank" id="dynamic-action-btn">
+                Lista de Clientes Fríos: ${p.name}
+            </a>
+        `;
+    } else {
+        container.innerHTML = "";
+    }
 }
 
 function renderContent() {
@@ -571,9 +693,92 @@ function renderContent() {
     el.innerHTML = html;
 }
 
-renderProfileTabs();
-renderSidebarNav();
-renderContent();
+// FUNCIONALIDAD DE PDF
+function generatePDF() {
+    const p = DATA.profiles[currentProfile];
+    const container = document.getElementById('pdf-template');
+    
+    // Función auxiliar para sacar 7 items
+    const get7 = (arr) => arr ? arr.slice(0, 7) : [];
+
+    // Construcción del contenido del resumen
+    container.innerHTML = `
+        <div style="padding: 40px; font-family: 'Montserrat', sans-serif; color: #1a1c2c; background: #fff;">
+            <div style="border-bottom: 4px solid #ef233c; padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h1 style="font-size: 28px; margin: 0; text-transform: uppercase; font-weight: 800;">Resumen del Cliente</h1>
+                    <h2 style="font-size: 18px; color: #ef233c; margin: 0;">${p.emoji} ${p.name}</h2>
+                </div>
+                <div style="text-align: right; font-size: 10px; color: #8d99ae; text-transform: uppercase;">Cliente Ultra Rentable</div>
+            </div>
+
+            <div style="background: #1a1c2c; color: #fff; padding: 25px; border-radius: 15px; margin-bottom: 30px;">
+                <p style="font-style: italic; font-size: 16px; margin: 0;">${p.frase}</p>
+            </div>
+
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+                <tr>
+                    <td style="width: 50%; padding-right: 15px;">
+                        <h4 style="font-size: 10px; color: #8d99ae; text-transform: uppercase; margin-bottom: 5px;">Cargo</h4>
+                        <p style="font-weight: 600; font-size: 13px;">${p.cargo}</p>
+                    </td>
+                    <td style="width: 50%;">
+                        <h4 style="font-size: 10px; color: #8d99ae; text-transform: uppercase; margin-bottom: 5px;">Empresa</h4>
+                        <p style="font-weight: 600; font-size: 13px;">${p.empresa}</p>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-left: 4px solid #ef233c; padding-left: 10px; font-size: 14px; text-transform: uppercase; margin-bottom: 15px;">7 Puntos Clave por Categoría</h3>
+                
+                <div style="margin-bottom: 20px;">
+                    <strong style="font-size: 11px; color: #ef233c;">Dolores Explícitos:</strong>
+                    <ul style="font-size: 11px; margin-top: 5px;">${get7(p.doloresE).map(i => `<li>${i}</li>`).join('')}</ul>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <strong style="font-size: 11px; color: #ef233c;">Dolores Ocultos:</strong>
+                    <ul style="font-size: 11px; margin-top: 5px;">${get7(p.doloresO).map(i => `<li>${i}</li>`).join('')}</ul>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <strong style="font-size: 11px; color: #ef233c;">Miedos:</strong>
+                    <ul style="font-size: 11px; margin-top: 5px;">${get7(p.miedos).map(i => `<li>${i}</li>`).join('')}</ul>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <strong style="font-size: 11px; color: #ef233c;">Deseos Explícitos:</strong>
+                    <ul style="font-size: 11px; margin-top: 5px;">${get7(p.deseosE).map(i => `<li>${i}</li>`).join('')}</ul>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <strong style="font-size: 11px; color: #ef233c;">Promesas:</strong>
+                    <ul style="font-size: 11px; margin-top: 5px;">${get7(p.promesas).map(i => `<li>${i}</li>`).join('')}</ul>
+                </div>
+            </div>
+            
+            <div style="text-align: center; border-top: 1px solid #e2e8f0; padding-top: 20px; font-size: 9px; color: #8d99ae;">
+                Documento generado exclusivamente para propósitos de análisis estratégico.
+            </div>
+        </div>
+    `;
+
+    const opt = {
+        margin:       0.5,
+        filename:     `CUR_${p.name.replace(/\s+/g, '_')}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(container).save().then(() => {
+        container.innerHTML = ""; // Limpiar tras descarga
+    });
+}
+
+// Inicialización
+init();
 </script>
-  </body>
+</body>
 </html>
