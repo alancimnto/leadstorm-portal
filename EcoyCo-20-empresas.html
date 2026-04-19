@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reporte: Empacadoras Exportadoras de Michoacán</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,9 +13,9 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1A1C2C 0%, #1A1C2C 100%);
+            color: #1A1C2C;
             line-height: 1.6;
         }
         
@@ -25,21 +26,23 @@
         }
         
         .header {
-            background: white;
+            background: #FFFFFF;
             padding: 40px;
             border-radius: 10px;
             margin-bottom: 30px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 8px solid #EF233C;
         }
         
         .header h1 {
-            color: #667eea;
+            color: #1A1C2C;
             margin-bottom: 10px;
             font-size: 2.5em;
+            font-weight: 800;
         }
         
         .header p {
-            color: #666;
+            color: #1A1C2C;
             font-size: 1.1em;
         }
         
@@ -51,27 +54,28 @@
         }
         
         .stat-card {
-            background: white;
+            background: #FFFFFF;
             padding: 25px;
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-left: 5px solid #667eea;
+            border-left: 5px solid #EF233C;
         }
         
         .stat-card h3 {
-            color: #667eea;
+            color: #EF233C;
             margin-bottom: 10px;
             font-size: 2em;
+            font-weight: 800;
         }
         
         .stat-card p {
-            color: #666;
+            color: #1A1C2C;
             font-size: 0.95em;
         }
         
         .section {
-            background: white;
+            background: #FFFFFF;
             padding: 30px;
             border-radius: 10px;
             margin-bottom: 30px;
@@ -79,11 +83,12 @@
         }
         
         .section h2 {
-            color: #667eea;
+            color: #1A1C2C;
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 3px solid #667eea;
+            border-bottom: 3px solid #EF233C;
             font-size: 1.8em;
+            font-weight: 800;
         }
         
         table {
@@ -93,20 +98,20 @@
         }
         
         th {
-            background: #667eea;
-            color: white;
+            background: #1A1C2C;
+            color: #FFFFFF;
             padding: 15px;
             text-align: left;
-            font-weight: 600;
+            font-weight: 700;
         }
         
         td {
             padding: 12px 15px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #EEEEEE;
         }
         
         tr:hover {
-            background: #f5f5f5;
+            background: #F5F5F5;
         }
         
         .cert-badge {
@@ -152,27 +157,27 @@
         
         .phone::before {
             content: "☎ ";
-            color: #667eea;
+            color: #EF233C;
             font-weight: bold;
         }
         
         .email::before {
             content: "✉ ";
-            color: #667eea;
+            color: #EF233C;
             font-weight: bold;
         }
         
         .insights {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #1A1C2C 0%, #1A1C2C 100%);
+            color: #FFFFFF;
             padding: 30px;
             border-radius: 10px;
             margin-bottom: 30px;
         }
         
         .insights h2 {
-            color: white;
-            border-bottom-color: white;
+            color: #FFFFFF;
+            border-bottom-color: #EF233C;
             margin-bottom: 20px;
         }
         
@@ -187,12 +192,13 @@
             background: rgba(255,255,255,0.1);
             padding: 15px;
             border-radius: 5px;
-            border-left: 3px solid #fff;
+            border-left: 3px solid #EF233C;
         }
         
         .insight-item h4 {
             margin-bottom: 10px;
             font-size: 1.1em;
+            color: #EF233C;
         }
         
         .insight-item ul {
@@ -209,7 +215,7 @@
         }
         
         .bar {
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            background: linear-gradient(90deg, #EF233C, #EF233C);
             height: 30px;
             margin: 10px 0;
             border-radius: 5px;
@@ -223,7 +229,7 @@
         .footer {
             text-align: center;
             padding: 20px;
-            color: white;
+            color: #FFFFFF;
             margin-top: 30px;
         }
         
@@ -235,6 +241,14 @@
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.8em;
+            }
+            
+            .header .subtitle {
+                font-size: 1.1em;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
             }
             
             table {
@@ -288,36 +302,36 @@
                 <div class="insight-item">
                     <h4>📋 Certificaciones</h4>
                     <ul>
-                        <li><strong>USDA:</strong> 90% (18 empresas)</li>
-                        <li><strong>GlobalGAP:</strong> 75% (15 empresas)</li>
-                        <li><strong>SQF:</strong> 50% (10 empresas)</li>
-                        <li>Son estándares de industria obligatorios</li>
+                        <li><strong>USDA:</strong> 90% (18 emp.)</li>
+                        <li><strong>GlobalGAP:</strong> 75% (15 emp.)</li>
+                        <li><strong>SQF:</strong> 50% (10 emp.)</li>
+                        <li>Estándares obligatorios internacionales</li>
                     </ul>
                 </div>
                 <div class="insight-item">
                     <h4>🌍 Mercados Destino</h4>
                     <ul>
-                        <li><strong>USA:</strong> 95% (mercado principal)</li>
-                        <li><strong>Canadá:</strong> 70% (crecimiento)</li>
-                        <li><strong>Europa:</strong> 50% (premium)</li>
-                        <li><strong>Japón:</strong> 40% (especializado)</li>
+                        <li><strong>USA:</strong> 95% (principal)</li>
+                        <li><strong>Canadá:</strong> 70%</li>
+                        <li><strong>Europa:</strong> 50%</li>
+                        <li><strong>Japón:</strong> 40% (premium)</li>
                     </ul>
                 </div>
                 <div class="insight-item">
-                    <h4>🍎 Productos</h4>
+                    <h4>🍎 Productos Dominantes</h4>
                     <ul>
-                        <li><strong>Aguacate Hass:</strong> 80% (producto estrella)</li>
-                        <li>Frutas tropicales (complementarias)</li>
-                        <li>Cítricos y otras frutas</li>
-                        <li>Michoacán = epicentro mundial</li>
+                        <li><strong>Aguacate:</strong> 80% (estrella)</li>
+                        <li>Frutas tropicales</li>
+                        <li>Frutas frescas variadas</li>
+                        <li>Cítricos complementarios</li>
                     </ul>
                 </div>
                 <div class="insight-item">
-                    <h4>📱 Contacto</h4>
+                    <h4>📱 Disponibilidad</h4>
                     <ul>
-                        <li><strong>Teléfono:</strong> 100% disponible</li>
-                        <li><strong>Email:</strong> 100% disponible</li>
-                        <li><strong>Sitio Web:</strong> 25% (limitado)</li>
+                        <li><strong>Teléfono:</strong> 100%</li>
+                        <li><strong>Email:</strong> 100%</li>
+                        <li><strong>Sitio Web:</strong> 25%</li>
                         <li>Acceso directo fácil</li>
                     </ul>
                 </div>
@@ -382,7 +396,7 @@
                     <tr>
                         <td>6</td>
                         <td><strong>Empacadora Social</strong></td>
-                        <td>Aguacate (pequeños productores)</td>
+                        <td>Aguacate (pequeños prod.)</td>
                         <td>Europa, Japón, O.Medio</td>
                         <td><span class="cert-badge cert-globalgap">GlobalGAP</span></td>
                         <td class="contact-info"><p class="phone">(443) 523-6789</p><p class="email">social@empacadora-aguacate.mx</p></td>
@@ -397,8 +411,8 @@
                     </tr>
                     <tr>
                         <td>8</td>
-                        <td><strong>Grupo Exportador Frutas</strong></td>
-                        <td>Aguacate, Frutas variadas</td>
+                        <td><strong>Grupo Exportador</strong></td>
+                        <td>Aguacate, Frutas varias</td>
                         <td>USA, Canadá, México</td>
                         <td><span class="cert-badge cert-globalgap">GlobalGAP</span> <span class="cert-badge cert-usda">USDA</span></td>
                         <td class="contact-info"><p class="phone">(443) 322-3456</p><p class="email">exporta@grupoexportador.mx</p></td>
@@ -414,15 +428,15 @@
                     <tr>
                         <td>10</td>
                         <td><strong>Exportadora Centro</strong></td>
-                        <td>Frutas frescas variadas</td>
+                        <td>Frutas frescas varias</td>
                         <td>USA, Canadá, Europa</td>
                         <td><span class="cert-badge cert-usda">USDA</span> <span class="cert-badge cert-sqf">SQF</span></td>
                         <td class="contact-info"><p class="phone">(443) 321-2345</p><p class="email">exporta@frutas-centro.mx</p></td>
                     </tr>
                     <tr>
                         <td>11</td>
-                        <td><strong>Empacadora La Huerta</strong></td>
-                        <td>Aguacate, Frutas variadas</td>
+                        <td><strong>La Huerta</strong></td>
+                        <td>Aguacate, Frutas varias</td>
                         <td>USA, México, Canadá</td>
                         <td><span class="cert-badge cert-globalgap">GlobalGAP</span> <span class="cert-badge cert-usda">USDA</span></td>
                         <td class="contact-info"><p class="phone">(443) 525-4567</p><p class="email">info@empacadora-huerta.mx</p></td>
@@ -486,7 +500,7 @@
                     <tr>
                         <td>19</td>
                         <td><strong>Empaques Ágiles</strong></td>
-                        <td>Frutas variadas, Aguacate</td>
+                        <td>Frutas varias, Aguacate</td>
                         <td>USA, Canadá</td>
                         <td><span class="cert-badge cert-usda">USDA</span> <span class="cert-badge cert-globalgap">GlobalGAP</span></td>
                         <td class="contact-info"><p class="phone">(443) 315-7890</p><p class="email">info@empaques-agiles.mx</p></td>
@@ -512,7 +526,7 @@
                     <div class="bar" style="width: 90%;">USDA: 18 empresas (90%)</div>
                     <div class="bar" style="width: 75%;">GlobalGAP: 15 empresas (75%)</div>
                     <div class="bar" style="width: 50%;">SQF: 10 empresas (50%)</div>
-                    <div class="bar" style="width: 5%; background: linear-gradient(90deg, #c3e1a9, #9ccc65);">Orgánico: 1 empresa (5%)</div>
+                    <div class="bar" style="width: 5%; background: linear-gradient(90deg, #27AE60, #2ECC71);">Orgánico: 1 empresa (5%)</div>
                 </div>
                 <p style="margin-top: 15px; color: #666; font-size: 0.95em;"><strong>Nota:</strong> Las tres certificaciones principales (USDA, GlobalGAP, SQF) son obligatorias para exportación a mercados internacionales. La mayoría de empresas tienen al menos 2 de estas certificaciones.</p>
             </div>
@@ -527,8 +541,8 @@
                     <div class="bar" style="width: 95%;">USA: 19 empresas (95%)</div>
                     <div class="bar" style="width: 70%;">Canadá: 14 empresas (70%)</div>
                     <div class="bar" style="width: 50%;">Europa: 10 empresas (50%)</div>
-                    <div class="bar" style="width: 40%; background: linear-gradient(90deg, #ffb74d, #ff9800);">Japón: 8 empresas (40%)</div>
-                    <div class="bar" style="width: 25%; background: linear-gradient(90deg, #ef5350, #e53935);">México: 5 empresas (25%)</div>
+                    <div class="bar" style="width: 40%;">Japón: 8 empresas (40%)</div>
+                    <div class="bar" style="width: 25%;">México: 5 empresas (25%)</div>
                 </div>
                 <p style="margin-top: 15px; color: #666; font-size: 0.95em;"><strong>Estrategia:</strong> USA es el mercado principal (95%). Canadá representa un mercado en crecimiento. Europa y Japón son mercados premium con mayor selectividad.</p>
             </div>
@@ -538,17 +552,17 @@
         <div class="section">
             <h2>💡 Recomendaciones Estratégicas</h2>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-                <div style="background: #f5f5f5; padding: 15px; border-radius: 5px;">
-                    <h4 style="color: #667eea; margin-bottom: 10px;">Para Importadores/Compradores</h4>
+                <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; border-left: 5px solid #EF233C;">
+                    <h4 style="color: #EF233C; margin-bottom: 10px;">Para Importadores/Compradores</h4>
                     <ul style="margin-left: 20px;">
                         <li>Verificar que tengan certificación USDA mínimo</li>
                         <li>Priorizar empresas con GlobalGAP y SQF para mayor seguridad</li>
                         <li>Contacto directo disponible al 100% (teléfono + email)</li>
-                        <li>Especializarse por tipo de fruta según necesidad</li>
+                        <li>Especializar por tipo de fruta según necesidad</li>
                     </ul>
                 </div>
-                <div style="background: #f5f5f5; padding: 15px; border-radius: 5px;">
-                    <h4 style="color: #667eea; margin-bottom: 10px;">Para Proveedores/Consultores</h4>
+                <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; border-left: 5px solid #EF233C;">
+                    <h4 style="color: #EF233C; margin-bottom: 10px;">Para Consultores/Proveedores</h4>
                     <ul style="margin-left: 20px;">
                         <li>75% ya tienen GlobalGAP - oportunidad para el otro 25%</li>
                         <li>50% carecen de SQF - mercado de consultoría disponible</li>
@@ -556,8 +570,8 @@
                         <li>Especialización por mercado: Japón requiere más rigor</li>
                     </ul>
                 </div>
-                <div style="background: #f5f5f5; padding: 15px; border-radius: 5px;">
-                    <h4 style="color: #667eea; margin-bottom: 10px;">Para Empacadoras</h4>
+                <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; border-left: 5px solid #EF233C;">
+                    <h4 style="color: #EF233C; margin-bottom: 10px;">Para Empacadoras</h4>
                     <ul style="margin-left: 20px;">
                         <li>Invertir en presencia digital/sitio web</li>
                         <li>Obtener SQF si no la tienen (50% la carecen)</li>
