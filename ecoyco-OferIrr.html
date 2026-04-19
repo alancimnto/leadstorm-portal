@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoNest — Oferta Irresistible · CIMNTO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Librería para generar el PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <style>
+        /* ============================================================
+           CONFIGURACIÓN DE COLORES (MODIFICA AQUÍ)
+           ============================================================
+        */
+        :root {
+            /* - color principal (Botones, acentos, líneas destacadas): */
+            --brand-main: #EF233C; 
+            
+            /* - color secundario (Fondo de encabezados, bloques fuertes): */
+            --brand-secondary: #1A1C2C; 
+
+            /* - color de fondo (Fondo general de la web): */
+            --brand-bg: #F1F5F9; 
+
+            /* - color de texto (Cuerpo del mensaje): */
+            --brand-text: #2B2D42;
+
+            /* Colores neutros de soporte */
+            --white: #FFFFFF;
+            --text-mid: #64748B;
+            --text-light: #94A3B8;
+            --border: #E2E8F0;
+            --shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        /* ── RESET Y FUNDAMENTOS RESPONSIVOS ── */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--brand-bg);
+            color: var(--brand-text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--white);
+            min-height: 100vh;
+            box-shadow: var(--shadow);
+        }
+
+        /* ── INTRO CIMNTO (Interno) ── */
+        .intro { padding: 40px 24px; border-bottom: 4px solid var(--brand-main); }
+        .intro-from { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
+        .intro-avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--brand-secondary); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: var(--brand-main); }
+        .intro-name { font-size: 14px; font-weight: 800; }
+        .intro-title { font-size: 22px; font-weight: 800; line-height: 1.3; margin: 15px 0; color: var(--brand-secondary); }
+        
+        .intro-index { margin-top: 30px; display: grid; gap: 10px; }
+        .index-item { display: flex; gap: 15px; padding: 12px 0; border-bottom: 1px solid var(--brand-bg); }
+        .index-num { color: var(--brand-main); font-weight: 800; font-size: 12px; min-width: 25px; }
+        .index-name { font-weight: 700; font-size: 13px; color: var(--brand-secondary); }
+
+        /* ── SEPARADOR DOC-START ── */
+        .doc-start {
+            background: var(--brand-main);
+            padding: 15px;
+            display: flex; align-items: center; gap: 15px;
+            color: white; font-weight: 800; font-size: 10px; text-transform: uppercase; letter-spacing: 2px;
+        }
+        .doc-start-line { flex: 1; height: 1px; background: rgba(255,255,255,0.3); }
+
+        /* ── CONTENIDO DEL DOCUMENTO (Lo que va al PDF) ── */
+        #printable-content { background: var(--white); width: 100%; }
+        
+        .hero { background: var(--brand-secondary); padding: 60px 30px; color: white; }
+        .hero-eyebrow { color: var(--brand-main); font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; }
+        .hero-name { font-size: clamp(32px, 8vw, 48px); font-weight: 800; line-height: 1.1; }
+        .hero-sub { font-size: 14px; opacity: 0.5; text-transform: uppercase; margin-bottom: 25px; font-weight: 600; }
+        .hero-promise { border-left: 4px solid var(--brand-main); padding-left: 20px; font-size: 16px; font-weight: 500; }
+
+        .section { padding: 40px 24px; }
+        .sec-tag { background: var(--brand-main); color: white; font-size: 9px; font-weight: 800; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; display: inline-block; margin-bottom: 10px; }
+        .sec-title { font-size: 24px; font-weight: 800; color: var(--brand-secondary); margin-bottom: 15px; }
+        
+        .desc-box { background: var(--brand-secondary); color: rgba(255,255,255,0.85); padding: 30px; border-radius: 15px; font-size: 14px; }
+        .desc-box strong { color: var(--brand-main); }
+
+        /* Grilla de bonos responsiva */
+        .bono-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 15px; 
+            margin-top: 20px;
+        }
+        .bono-card { border: 1px solid var(--border); padding: 20px; border-radius: 12px; display: flex; gap: 15px; border-left: 5px solid var(--brand-secondary); background: var(--white); height: 100%; }
+        .bono-card.accion { border-left-color: var(--brand-main); background: #FFF8F8; }
+        .bono-icon { font-size: 24px; flex-shrink: 0; }
+        .bono-name { font-weight: 700; font-size: 13px; color: var(--brand-secondary); line-height: 1.4; }
+        .bono-type { font-size: 9px; font-weight: 800; color: var(--text-light); text-transform: uppercase; margin-bottom: 4px; }
+
+        .urgencia-item { display: flex; gap: 15px; margin-bottom: 12px; background: #FAFAFA; padding: 15px; border-radius: 10px; align-items: flex-start; }
+        .urgencia-dot { width: 8px; height: 8px; background: var(--brand-main); border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+        .urgencia-text { font-size: 13px; font-weight: 500; }
+        
+        .escasez-box { background: #FFF8F8; border: 2px solid var(--brand-main); padding: 25px; border-radius: 15px; }
+        .escasez-title { color: var(--brand-main); font-weight: 800; text-transform: uppercase; font-size: 14px; margin-bottom: 10px; }
+
+        .garantia-hero { background: var(--brand-secondary); color: white; padding: 35px; border-radius: 20px; margin-bottom: 15px; }
+        .gar-label { color: var(--brand-main); font-weight: 800; font-size: 10px; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .gar-title { font-size: 20px; font-weight: 800; margin-bottom: 10px; }
+        .gar-mini { border-left: 4px solid var(--brand-main); padding: 15px 20px; background: #FFF8F8; margin-bottom: 10px; border-radius: 0 10px 10px 0; }
+
+        .concentrado { padding: 40px 24px; background: #FAFAFA; border-top: 1px solid var(--border); }
+        .conc-group { margin-bottom: 30px; }
+        .conc-group-title { font-size: 11px; font-weight: 800; color: var(--brand-main); text-transform: uppercase; margin-bottom: 10px; }
+        .conc-item { font-size: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+        .conc-item:before { content: "✓"; color: var(--brand-main); font-weight: 800; }
+
+        /* ── BOTONES Y PIE ── */
+        .dl-container { padding: 40px 24px; text-align: center; }
+        .dl-btn { 
+            background: var(--brand-main); color: white; border: none; padding: 22px; border-radius: 12px; 
+            font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; width: 100%; 
+            font-size: 13px; box-shadow: 0 10px 20px rgba(239, 35, 60, 0.2); transition: 0.3s;
+        }
+        .dl-btn:hover { background: var(--brand-secondary); transform: translateY(-3px); }
+
+        .footer { background: var(--brand-secondary); padding: 30px; text-align: center; color: rgba(255,255,255,0.3); font-size: 10px; text-transform: uppercase; font-weight: 700; letter-spacing: 2px; }
+        .footer strong { color: var(--brand-main); }
+
+        /* Ajustes específicos para pantallas muy pequeñas */
+        @media (max-width: 480px) {
+            .section { padding: 30px 15px; }
+            .hero { padding: 40px 20px; }
+            .hero-name { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+
+    <!-- ══ INTRO CIMNTO (Solo vista web) ══ -->
+    <div class="intro">
+        <div class="intro-from">
+            <div class="intro-avatar">CIM</div>
+            <div>
+                <div class="intro-name">Alan · CIMNTO</div>
+                <div style="font-size: 10px; color: var(--text-mid); font-weight: 600; text-transform: uppercase;">Growth Marketing Agency</div>
+            </div>
+        </div>
+        <div class="sec-tag">Entregable estratégico · EcoNest</div>
+        <div class="intro-title">Este documento es tu arma de ventas más poderosa.</div>
+        <div class="intro-index">
+            <div class="index-item"><span class="index-num">01</span><div class="index-name">Promesa de transformación</div></div>
+            <div class="index-item"><span class="index-num">02</span><div class="index-name">Bonos de Valor (6 recursos)</div></div>
+            <div class="index-item"><span class="index-num">03</span><div class="index-name">Bonos de Acción Rápida (3 recursos)</div></div>
+            <div class="index-item"><span class="index-num">04</span><div class="index-name">Garantías blindadas</div></div>
+        </div>
+    </div>
+
+    <div class="doc-start">
+        <div class="doc-start-line"></div>
+        <span>Propuesta para el cliente</span>
+        <div class="doc-start-line"></div>
+    </div>
+
+    <!-- ══ ÁREA DEL DOCUMENTO (Printable) ══ -->
+    <div id="printable-content">
+        
+        <section class="hero">
+            <div class="hero-eyebrow">Oferta Irresistible</div>
+            <h1 class="hero-name">EcoNest</h1>
+            <div class="hero-sub">Tarima de exportación premium</div>
+            <div class="hero-promise">Exporta con cero problemas fitosanitarios sin tramitar certificados cada vez, incluso si SENASICA ya te aprobó el proceso actual.</div>
+        </section>
+
+        <section class="section">
+            <div class="sec-tag">El Producto</div>
+            <h2 class="sec-title">Identidad EcoNest</h2>
+            <div class="desc-box">
+                <p style="margin-bottom:15px"><strong>EcoNest</strong> no es una tarima. Es la decisión que separa a los exportadores que sobreviven la temporada de los que construyen una operación de clase mundial.</p>
+                <p>Fabricado con madera termo-prensada, libre de plagas desde su origen — pasa aduanas de EE.UU. y Japón sin certificados de emergencia ni embarques detenidos.</p>
+            </div>
+        </section>
+
+        <section class="section" style="padding-top:0">
+            <div class="sec-tag">Incluido</div>
+            <h2 class="sec-title">Bonos de valor</h2>
+            <div class="bono-grid">
+                <div class="bono-card"><span class="bono-icon">📋</span><div><div class="bono-type">Guía</div><div class="bono-name">Los 7 errores fitosanitarios que detienen embarques</div></div></div>
+                <div class="bono-card"><span class="bono-icon">✅</span><div><div class="bono-type">Checklist</div><div class="bono-name">Documentación completa lista para imprimir y firmar</div></div></div>
+                <div class="bono-card"><span class="bono-icon">📦</span><div><div class="bono-type">Servicio</div><div class="bono-name">Reserva garantizada de volumen sin anticipo</div></div></div>
+                <div class="bono-card"><span class="bono-icon">📊</span><div><div class="bono-type">Reporte</div><div class="bono-name">Simulación de ahorro en flete por contenedor</div></div></div>
+                <div class="bono-card"><span class="bono-icon">🔬</span><div><div class="bono-type">Técnico</div><div class="bono-name">Por qué el termo-prensado elimina mermas</div></div></div>
+                <div class="bono-card"><span class="bono-icon">🎥</span><div><div class="bono-type">Video</div><div class="bono-name">Masterclass: Embarques a prueba de aduanas</div></div></div>
+            </div>
+        </section>
+
+        <section class="section" style="padding-top:0">
+            <div class="sec-tag">Si decides hoy</div>
+            <h2 class="sec-title">Acción Rápida</h2>
+            <div class="bono-grid">
+                <div class="bono-card accion"><span class="bono-icon">🏭</span><div><div class="bono-type">Visita</div><div class="bono-name">Diagnóstico gratuito de espacio en tu almacén</div></div></div>
+                <div class="bono-card accion"><span class="bono-icon">📈</span><div><div class="bono-type">Estrategia</div><div class="bono-name">Sesión de 30 min para armar tu argumento ante dirección</div></div></div>
+                <div class="bono-card accion"><span class="bono-icon">🤝</span><div><div class="bono-type">Red</div><div class="bono-name">Contacto directo con 2 exportadoras que ya usan EcoNest</div></div></div>
+            </div>
+        </section>
+
+        <section class="section" style="padding-top:0">
+            <div class="sec-tag">Fechas</div>
+            <h2 class="sec-title">Por qué actuar ahora</h2>
+            <div class="urgencia-item"><div class="urgencia-dot"></div><div class="urgencia-text">Precio garantizado hasta el <strong>[fecha]</strong>.</div></div>
+            <div class="urgencia-item"><div class="urgencia-dot"></div><div class="urgencia-text">Reserva garantizada de temporada si firmas antes del <strong>[fecha]</strong>.</div></div>
+            <div class="urgencia-item"><div class="urgencia-dot"></div><div class="urgencia-text">Precio especial de lote de prueba vence el <strong>[fecha]</strong>.</div></div>
+        </section>
+
+        <section class="section" style="padding-top:0">
+            <div class="sec-tag">Cupos</div>
+            <div class="escasez-box">
+                <div class="escasez-title">Reserva sin anticipo cerrada al [fecha]</div>
+                <p style="font-size: 13px;">Este beneficio aplica solo para los primeros clientes de este ciclo.</p>
+            </div>
+        </section>
+
+        <section class="section" style="padding-top:0">
+            <div class="sec-tag">Garantías</div>
+            <div class="garantia-hero">
+                <span class="gar-label">Estrella</span>
+                <div class="gar-title">100% Devolución si no cumple.</div>
+                <p style="font-size:13px; opacity:0.8">Si EcoNest no cumple en tu operación real, te regresamos cada peso. Sin excusas.</p>
+            </div>
+            <div class="gar-mini"><div class="bono-type">Aduana</div><div style="font-size:13px; font-weight:600">Reponemos pallets del embarque si es detenido.</div></div>
+            <div class="gar-mini"><div class="bono-type">Humedad</div><div style="font-size:13px; font-weight:600">Reponemos sin costo por deformación en frío.</div></div>
+        </section>
+
+        <section class="concentrado">
+            <div class="conc-group">
+                <div class="conc-group-title">Resumen de beneficios</div>
+                <div class="conc-item">Reserva sin anticipo (Orden 1)</div>
+                <div class="conc-item">Checklist Documentación Aduana</div>
+                <div class="conc-item">Garantía de Paso en Aduana</div>
+                <div class="conc-item">Sesión Estratégica con equipo Logístico</div>
+            </div>
+        </section>
+
+        <div class="footer">Estrategia desarrollada por <strong>CIMNTO</strong></div>
+    </div>
+
+    <!-- ══ BOTÓN DESCARGA ══ -->
+    <div class="dl-container">
+        <button class="dl-btn" id="btn-pdf-download">⬇ Descargar Oferta Irresistible (PDF)</button>
+    </div>
+
+</div>
+
+<script>
+    document.getElementById('btn-pdf-download').addEventListener('click', function() {
+        // Seleccionamos el área de la oferta (después de doc-start)
+        const element = document.getElementById('printable-content');
+        
+        // Configuramos la descarga
+        const options = {
+            margin: 0,
+            filename: 'Oferta_Irresistible_EcoNest.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { 
+                scale: 2, 
+                useCORS: true,
+                letterRendering: true,
+                scrollY: 0 // Evita que el scroll actual afecte la captura
+            },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+        };
+
+        // Generar PDF
+        html2pdf().from(element).set(options).save().catch(err => {
+            console.error("Error al generar PDF:", err);
+            alert("Hubo un problema al generar el archivo. Por favor, intenta de nuevo.");
+        });
+    });
+</script>
+
+</body>
+</html>
